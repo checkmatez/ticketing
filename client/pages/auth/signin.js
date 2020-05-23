@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Router from 'next/router';
-import { useRequest } from '../../hooks/use-request';
+import useRequest from '../../hooks/use-request';
 
 export default () => {
   const [email, setEmail] = useState('');
@@ -8,36 +8,41 @@ export default () => {
   const { doRequest, errors } = useRequest({
     url: '/api/users/signin',
     method: 'post',
-    body: { email, password },
-    onSuccess: () => Router.push('/'),
+    body: {
+      email,
+      password
+    },
+    onSuccess: () => Router.push('/')
   });
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
+  const onSubmit = async event => {
+    event.preventDefault();
 
-    doRequest();
+    await doRequest();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit}>
       <h1>Sign In</h1>
       <div className="form-group">
         <label>Email Address</label>
-        <input className="form-control" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input
+          value={email}
+          onChange={e => setEmail(e.target.value)}
+          className="form-control"
+        />
       </div>
       <div className="form-group">
         <label>Password</label>
         <input
+          value={password}
+          onChange={e => setPassword(e.target.value)}
           type="password"
           className="form-control"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
         />
       </div>
       {errors}
-      <button type="submit" className="btn btn-primary">
-        Sign in
-      </button>
+      <button className="btn btn-primary">Sign In</button>
     </form>
   );
 };
