@@ -10,7 +10,7 @@
   "scripts": {
     "build": "yarn clean && tsc",
     "clean": "del ./build/*",
-    "pub": "git add . && git commit -m \"update\" && yarn version --new-version patch && yarn publish",
+    "pub": "git add . && git commit -m \"update\" && yarn publish --new-version patch",
     "prepublishOnly": "yarn build"
   },
   "devDependencies": {
