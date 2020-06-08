@@ -8,9 +8,10 @@
   ],
   "license": "MIT",
   "scripts": {
-    "build": "npm run clean && tsc",
+    "build": "yarn clean && tsc",
     "clean": "del ./build/*",
-    "prepublishOnly": "npm run build"
+    "pub": "git add . && git commit -m \"update\" && yarn version --new-version patch && yarn publish",
+    "prepublishOnly": "yarn build"
   },
   "devDependencies": {
     "del-cli": "^3.0.1",
