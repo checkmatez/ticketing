@@ -1,5 +1,5 @@
 import express from 'express';
-import { currentUser } from '../middlewares/current-user';
+import { currentUser } from '@chm-tickets/common';
 
 export const currentUserRouter = express.Router();
 
