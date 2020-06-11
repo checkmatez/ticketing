@@ -258,9 +258,9 @@
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
 "@chm-tickets/common@^1.0.6":
-  version "1.0.9"
-  resolved "https://registry.yarnpkg.com/@chm-tickets/common/-/common-1.0.9.tgz#3ffe59e87db93fbdbda5c1474bdcf1af6e9928d3"
-  integrity sha512-9ELSDGyOOP5/Ev8CB1yGuMArpmB1C/k5Vk3aSDwPOZSj+0Hg11rNSaJq6Clqlp/x/wNwznDAx4pfL4jZ+oZT6A==
+  version "1.0.10"
+  resolved "https://registry.yarnpkg.com/@chm-tickets/common/-/common-1.0.10.tgz#e169cf4167ab1746050807b7ffdbb89d8c32e537"
+  integrity sha512-d65CHEzjg+YB7imzDzqSd+nItaH6LHShQpbxZmc+ebDxwpRnIG6nYZcl4AjmwF7IEQnDY8UlrrHA2KKygtlFlw==
   dependencies:
     "@types/cookie-session" "^2.0.40"
     "@types/express" "^4.17.6"
