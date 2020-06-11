@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from 'express';
 import { CustomError } from '../errors/custom-error';
 
 export const errorHandler = (err: Error, req: Request, res: Response, next: NextFunction) => {
-  console.log('Error:', err);
-  console.log('Error stringified:', JSON.stringify(err, null, 2));
+  console.log('Error:', err.message);
   if (err instanceof CustomError) {
     return res.status(err.statusCode).send(err.serializeErrors());
   }
