@@ -35,7 +35,8 @@ afterAll(async () => {
 });
 
 global.signin = () => {
-  const payload = { id: 'asd1', email: 'test@test.com' };
+  const id = new mongoose.Types.ObjectId().toHexString();
+  const payload = { id, email: 'test@test.com' };
   const token = sign(payload, process.env.JWT_KEY!);
   const session = { jwt: token };
   const sessionJSON = JSON.stringify(session);
