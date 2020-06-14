@@ -7,6 +7,8 @@ import {
 } from '@chm-tickets/common';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
+import { TicketUpdatedPublisher } from '../events/publishers/ticket-updated-publisher';
+import { natsWrapper } from '../nats-wrapper';
 
 export const updateTicketRouter = express.Router();
 
@@ -32,6 +34,14 @@ updateTicketRouter.put(
 
     ticket.set({ title, price });
     await ticket.save();
+
+    const publisher = new TicketUpdatedPublisher(natsWrapper.getClient());
+    await publisher.publish({
+      id: ticket.id,
+      title: ticket.title,
+      price: ticket.price,
+      userId: ticket.userId,
+    });
 
     res.send(ticket);
   },
