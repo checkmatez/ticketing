@@ -5,6 +5,8 @@ import { Order, OrderStatus } from '../../models/order';
 import { natsWrapper } from '../../nats-wrapper';
 import { Ticket } from '../../models/ticket';
 
+jest.mock('../../nats-wrapper.ts');
+
 it('returns an error if a ticket is not found', async () => {
   const ticketId = new mongoose.Types.ObjectId().toHexString();
   await request(app)
@@ -50,4 +52,18 @@ it('reserves a ticket', async () => {
     .expect(201);
 });
 
-it.todo('emits order:created event');
+it('emits order:created event', async () => {
+  const ticket = Ticket.build({
+    title: 'concert',
+    price: 20,
+  });
+  await ticket.save();
+
+  await request(app)
+    .post('/api/orders')
+    .set('Cookie', global.signin())
+    .send({ ticketId: ticket.id })
+    .expect(201);
+
+  expect(natsWrapper.getClient().publish).toBeCalled();
+});
