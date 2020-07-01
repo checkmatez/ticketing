@@ -1,9 +1,14 @@
 import request from 'supertest';
 import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
+import mongoose from 'mongoose';
 
 it('returns 401 if user belongs to another user', async () => {
-  const ticket = await Ticket.build({ title: 'concert', price: 20 }).save();
+  const ticket = await Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'concert',
+    price: 20,
+  }).save();
 
   const user = global.signin();
 
@@ -21,7 +26,11 @@ it('returns 401 if user belongs to another user', async () => {
 });
 
 it('fetches an order', async () => {
-  const ticket = await Ticket.build({ title: 'concert', price: 20 }).save();
+  const ticket = await Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'concert',
+    price: 20,
+  }).save();
 
   const user = global.signin();
 

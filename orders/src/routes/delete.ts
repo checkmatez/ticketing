@@ -22,6 +22,7 @@ deleteRouter.delete('/api/orders/:orderId', requireAuth, async (req: Request, re
 
   new OrderCancelledPublisher(natsWrapper.getClient()).publish({
     id: order.id,
+    version: order.version,
     ticket: {
       id: order.ticket.id,
     },

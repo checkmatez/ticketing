@@ -2,6 +2,8 @@ import 'express-async-errors';
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { OrderCreatedListener } from './events/listeners/order-created-listener';
+import { OrderCancelledListener } from './events/listeners/order-cancelled-listener';
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -43,6 +45,9 @@ const start = async () => {
     process.on('SIGTERM', () => {
       natsWrapper.getClient().close();
     });
+
+    new OrderCreatedListener(natsWrapper.getClient()).listen();
+    new OrderCancelledListener(natsWrapper.getClient()).listen();
   } catch (error) {
     console.error(error);
   }

@@ -3,11 +3,16 @@ import { app } from '../../app';
 import { Ticket } from '../../models/ticket';
 import { OrderStatus } from '../../models/order';
 import { natsWrapper } from '../../nats-wrapper';
+import mongoose from 'mongoose';
 
 jest.mock('../../nats-wrapper.ts');
 
 it('marks an order as cancelled', async () => {
-  const ticket = await Ticket.build({ title: 'concert', price: 20 }).save();
+  const ticket = await Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'concert',
+    price: 20,
+  }).save();
 
   const user = global.signin();
 
@@ -29,7 +34,11 @@ it('marks an order as cancelled', async () => {
 });
 
 it('publishes an event order:cancelled', async () => {
-  const ticket = await Ticket.build({ title: 'concert', price: 20 }).save();
+  const ticket = await Ticket.build({
+    id: new mongoose.Types.ObjectId().toHexString(),
+    title: 'concert',
+    price: 20,
+  }).save();
 
   const user = global.signin();
 

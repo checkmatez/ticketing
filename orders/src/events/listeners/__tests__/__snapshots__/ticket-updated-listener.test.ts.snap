@@ -1,0 +1,10 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`finds, updates and saves a ticket 1`] = `
+Object {
+  "id": "5efb8a95b3b9995358d25e96",
+  "price": 30,
+  "title": "new concert",
+  "version": 1,
+}
+`;

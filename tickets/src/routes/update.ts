@@ -4,6 +4,7 @@ import {
   validateRequest,
   NotFoundError,
   NotAuthorizedError,
+  BadRequestError,
 } from '@chm-tickets/common';
 import { body } from 'express-validator';
 import { Ticket } from '../models/ticket';
@@ -30,6 +31,11 @@ updateTicketRouter.put(
     if (ticket.userId !== req.currentUser!.id) {
       throw new NotAuthorizedError();
     }
+
+    if (ticket.orderId) {
+      throw new BadRequestError('Cannot edit a reserved ticket');
+    }
+
     const { title, price } = req.body;
 
     ticket.set({ title, price });
@@ -38,6 +44,7 @@ updateTicketRouter.put(
     const publisher = new TicketUpdatedPublisher(natsWrapper.getClient());
     await publisher.publish({
       id: ticket.id,
+      version: ticket.version,
       title: ticket.title,
       price: ticket.price,
       userId: ticket.userId,

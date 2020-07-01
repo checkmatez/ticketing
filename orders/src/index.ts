@@ -2,6 +2,8 @@ import 'express-async-errors';
 import mongoose from 'mongoose';
 import { app } from './app';
 import { natsWrapper } from './nats-wrapper';
+import { TicketCreatedListener } from './events/listeners/ticket-created-listener';
+import { TicketUpdatedListener } from './events/listeners/ticket-updated-listener';
 
 const start = async () => {
   if (!process.env.JWT_KEY) {
@@ -35,6 +37,9 @@ const start = async () => {
       console.log('Connection to NATS closed.');
       process.exit();
     });
+
+    new TicketCreatedListener(natsWrapper.getClient()).listen();
+    new TicketUpdatedListener(natsWrapper.getClient()).listen();
 
     process.on('SIGINT', () => {
       natsWrapper.getClient().close();
