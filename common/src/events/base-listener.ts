@@ -7,7 +7,7 @@ interface Event {
 }
 
 export abstract class Listener<T extends Event> {
-  private client: Stan;
+  protected client: Stan;
 
   constructor(client: Stan) {
     this.client = client;
