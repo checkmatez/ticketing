@@ -1,1 +1,1 @@
-export const queueGroupName = "expiration-service";
+export const QUEUE_GROUP_NAME = 'expiration-service'
