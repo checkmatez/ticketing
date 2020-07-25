@@ -16,7 +16,7 @@
     ]
   },
   "dependencies": {
-    "@chm-tickets/common": "^1.0.22",
+    "@chm-tickets/common": "^1.0.24",
     "cookie-session": "^1.4.0",
     "express": "^4.17.1",
     "express-async-errors": "^3.1.1",

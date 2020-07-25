@@ -1,20 +1,20 @@
-import express, { Request, Response } from 'express';
+import express, { Request, Response } from 'express'
 import {
   requireAuth,
   validateRequest,
   NotFoundError,
   OrderStatus,
   BadRequestError,
-} from '@chm-tickets/common';
-import { body } from 'express-validator';
-import { Ticket } from '../models/ticket';
-import { Order } from '../models/order';
-import { natsWrapper } from '../nats-wrapper';
-import { OrderCreatedPublisher } from '../events/order-created-publisher';
+} from '@chm-tickets/common'
+import { body } from 'express-validator'
+import { Ticket } from '../models/ticket'
+import { Order } from '../models/order'
+import { natsWrapper } from '../nats-wrapper'
+import { OrderCreatedPublisher } from '../events/order-created-publisher'
 
-export const newRouter = express.Router();
+export const newRouter = express.Router()
 
-const EXPIRATION_WINDOW_SECONDS = 15 * 60;
+const EXPIRATION_WINDOW_SECONDS = 1 * 60
 
 newRouter.post(
   '/api/orders',
@@ -22,30 +22,30 @@ newRouter.post(
   [body('ticketId').not().isEmpty().withMessage('TicketId is required.')],
   validateRequest,
   async (req: Request, res: Response) => {
-    const { ticketId } = req.body;
+    const { ticketId } = req.body
 
-    const ticket = await Ticket.findById(ticketId);
+    const ticket = await Ticket.findById(ticketId)
 
     if (!ticket) {
-      throw new NotFoundError();
+      throw new NotFoundError()
     }
 
-    const isReserved = await ticket.isReserved();
+    const isReserved = await ticket.isReserved()
 
     if (isReserved) {
-      throw new BadRequestError('Ticket is already reserved');
+      throw new BadRequestError('Ticket is already reserved')
     }
 
-    const expiresAt = new Date();
-    expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SECONDS);
+    const expiresAt = new Date()
+    expiresAt.setSeconds(expiresAt.getSeconds() + EXPIRATION_WINDOW_SECONDS)
 
     const order = Order.build({
       userId: req.currentUser!.id,
       expiresAt,
       status: OrderStatus.Created,
       ticket,
-    });
-    await order.save();
+    })
+    await order.save()
 
     new OrderCreatedPublisher(natsWrapper.getClient()).publish({
       id: order.id,
@@ -57,8 +57,8 @@ newRouter.post(
         id: ticket.id,
         price: ticket.price,
       },
-    });
+    })
 
-    res.status(201).send(order);
+    res.status(201).send(order)
   },
-);
+)

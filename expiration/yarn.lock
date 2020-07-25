@@ -272,10 +272,10 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
-"@chm-tickets/common@^1.0.22":
-  version "1.0.22"
-  resolved "https://registry.yarnpkg.com/@chm-tickets/common/-/common-1.0.22.tgz#17008c124fbf370e1a776d0e3e834fc781be9e25"
-  integrity sha512-KtY0V3lcq49VAKW58FSucD6yUPZ6Q/Lj5uJ0GFuBtLUJeyytvoqcg/JZSnrR/ss1Sqvb0O7sR+lH0AMtnrMPow==
+"@chm-tickets/common@^1.0.24":
+  version "1.0.24"
+  resolved "https://registry.yarnpkg.com/@chm-tickets/common/-/common-1.0.24.tgz#b44db21fdad8aa2f82b99689923b3dd5dc1302e7"
+  integrity sha512-2wMUAj6zzHvBGjIp36Kapc75Hl8nefZ9GJ0pkJ2w9em/PWlaNaMYnHY29B9yi8r5UeQTPsB1L+chv6dkLOWZqQ==
   dependencies:
     "@types/cookie-session" "^2.0.40"
     "@types/express" "^4.17.6"
